@@ -2,7 +2,10 @@ FROM node:4
 MAINTAINER Assis Ngolo <figassis+dev@gmail.com>
 
 EXPOSE 3001 8333 8332 18333 18332
+RUN apt-get update
+RUN apt-get install -y software-properties-common python-software-properties
+RUN apt-get install -y libzmq3-dev build-essential curl
 
-RUN npm install -g bitcore
+RUN npm install -g bitcore --unsafe-perm
 
 ENTRYPOINT [ "bitcored" ]
