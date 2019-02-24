@@ -1,7 +1,7 @@
 FROM node:4
 LABEL maintainer="nellcorp.com"
 
-ENV coin mainnet
+ENV coin ltcmainnet
 EXPOSE 3001 9332 9333 19332 19335
 RUN apt-get update
 RUN apt-get install -y software-properties-common python-software-properties
