@@ -1,18 +1,21 @@
-FROM node:4
-LABEL maintainer="nellcorp.com"
+FROM node:latest
+ARG DEBIAN_FRONTEND=noninteractive
 
-ENV coin mainnet
+ENV COIN dashmainnet
+ENV DASHD_VERSION 0.13.1.0
+
+# Update & install dependencies and do cleanup
+RUN apt-get update && apt-get install -y software-properties-common inetutils-ping build-essential libzmq3-dev curl git wget python
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Download and install dashd release
+RUN curl --silent -L "https://github.com/dashpay/dash/releases/download/v$DASHD_VERSION/dashcore-$DASHD_VERSION-x86_64-linux-gnu.tar.gz" -o /tmp/dashcore.tar.gz
+RUN mkdir /opt/dashd && tar xzf /tmp/dashcore.tar.gz -C /opt/dashd --strip 1 && rm /tmp/dashcore.tar.gz
+
+# Install dashcore
+# Because this is running under root, using --unsafe-perm helps ignore permissions issues
+RUN npm install -g @dashevo/dashcore-node @dashevo/insight-api @dashevo/insight-ui --unsafe-perm
+RUN wget https://raw.githubusercontent.com/figassis/docker-bitcore/master/setup.sh -O /opt/setup && chmod +x /opt/setup
+
 EXPOSE 3001 8332 18332 8333 28332
-RUN apt-get update
-RUN apt-get install -y software-properties-common python-software-properties
-RUN apt-get install -y libzmq3-dev build-essential curl wget git
-RUN wget https://github.com/dashpay/dash/releases/download/v0.12.2.3/dashcore-0.12.2.3-linux64.tar.gz
-RUN tar -xf dashcore-0.12.2.3-linux64.tar.gz && mv dashcore-0.12.2 /root/.dash && rm dashcore-0.12.2.3-linux64.tar.gz
-RUN mkdir -p /root/.ssh && ssh-keyscan github.com > /root/.ssh/known_hosts
-RUN git clone https://github.com/dashevo/bitcore-node-dash -b skip-dash-download
-RUN mv bitcore-node-dash /root/bitcore-dash && cd /root/bitcore-dash && npm install && npm install insight-api-dash --S && npm install insight-ui-dash --S
-RUN chmod +x /root/bitcore-dash/bin/bitcore-node-dash
-RUN wget https://raw.githubusercontent.com/figassis/docker-bitcore/master/setup.sh
-RUN mv setup.sh /opt/setup && chmod +x /opt/setup
-
-CMD ["sh","-c","/opt/setup $coin && /root/bitcore-dash/bin/bitcore-node-dash start -c /root/.dashcore"]
+CMD ["sh","-c","/opt/setup $COIN && dashcore-node start"]
