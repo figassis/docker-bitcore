@@ -32,9 +32,5 @@ if [ -d "$datadir/data" ] && [ -f bitcore_conf ] && [ -f bitcoin_conf ]; then
 fi
 
 git clone https://github.com/figassis/bitcore
-rm -rf datadir && mv bitcore/$1 $datadir && rm -rf bitcore
-ls $datadir
-ls $datadir/data
-cat $bitcore_conf
-cat $bitcoin_conf
+rm -rf $datadir/* && mv bitcore/$1/* $datadir/ && rm -rf bitcore
 exit #return error code from last command
