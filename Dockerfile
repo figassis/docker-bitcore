@@ -17,5 +17,6 @@ RUN mkdir /opt/dashd && tar xzf /tmp/dashcore.tar.gz -C /opt/dashd --strip 1 && 
 RUN npm install -g @dashevo/dashcore-node @dashevo/insight-api @dashevo/insight-ui --unsafe-perm
 RUN wget https://raw.githubusercontent.com/figassis/docker-bitcore/master/setup.sh -O /opt/setup && chmod +x /opt/setup
 
+
 EXPOSE 3001 8332 18332 8333 28332
 CMD ["sh","-c","/opt/setup $COIN && dashcore-node start"]
