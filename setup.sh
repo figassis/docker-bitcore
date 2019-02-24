@@ -18,8 +18,9 @@ case $1 in
         bitcore_conf=$datadir/litecore-node.json
         ;;
     dashmainnet|dashtestnet)
-        datadir=/root/.bitcore
-        bitcore_conf=$datadir/bitcore-node-dash.json
+        datadir=/root/.dashcore
+        bitcore_conf=$datadir/dashcore-node.json
+	bitcoin_conf=$datadir/data/dash.conf
         ;; 
     *)
         exit 1
