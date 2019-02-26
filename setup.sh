@@ -12,10 +12,12 @@ case $1 in
     mainnet|testnet)
         datadir=/root/.bitcore
         bitcore_conf=$datadir/bitcore-node.json
+        bitcoin_conf=$datadir/data/bitcoin.conf
         ;;
     ltcmainnet|ltctestnet)
         datadir=/root/.litecoin
         bitcore_conf=$datadir/litecore-node.json
+        bitcoin_conf=$datadir/data/litecoin.conf
         ;;
     dashmainnet|dashtestnet)
         datadir=/root/.dashcore
