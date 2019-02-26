@@ -17,7 +17,7 @@ case $1 in
     ltcmainnet|ltctestnet)
         datadir=/root/.litecoin
         bitcore_conf=$datadir/litecore-node.json
-        bitcoin_conf=$datadir/data/litecoin.conf
+        bitcoin_conf=$datadir/data/bitcoin.conf
         ;;
     dashmainnet|dashtestnet)
         datadir=/root/.dashcore
