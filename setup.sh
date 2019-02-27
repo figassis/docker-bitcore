@@ -29,6 +29,8 @@ case $1 in
         ;;
 esac
 
+rm $datadir/data/*.pid
+
 if [ -d "$datadir/data" ] && [ -f $bitcore_conf ] && [ -f $bitcoin_conf ]; then
   exit 0
 fi
