@@ -1,7 +1,7 @@
 FROM node:latest
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV COIN dashmainnet
+ENV coin dashmainnet
 ENV DASHD_VERSION 0.13.1.0
 
 # Update & install dependencies and do cleanup
@@ -19,4 +19,4 @@ RUN wget https://raw.githubusercontent.com/figassis/docker-bitcore/master/setup.
 
 
 EXPOSE 3001 8332 18332 8333 28332
-CMD ["sh","-c","/opt/setup $COIN && dashcore-node start"]
+CMD ["sh","-c","/opt/setup $coin && dashcore-node start"]
