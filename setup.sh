@@ -35,6 +35,15 @@ if [ -d "$datadir/data" ] && [ -f $bitcore_conf ] && [ -f $bitcoin_conf ]; then
   exit 0
 fi
 
+echo "We either did not find a $datadir directory, a $bitcore_conf or a $bitcoin_conf config files for $1"
+echo "This is either the first launch or this container was running a different blockchain"
+echo "We will remove everything under $datadir and attempt to backup $datadir/data to $datadir/data_old"
+
+
 git clone https://github.com/figassis/bitcore
-rm -rf $datadir/* && mv bitcore/$1/* $datadir/ && rm -rf bitcore
+
+#Preserve old blockchain, if we had any. data_old should be removed manually upon verification that it is not needed.
+mv $datadir/data $datadir/data_old
+
+rm $datadir/*.json && mv bitcore/$1/* $datadir/ && rm -rf bitcore
 exit #return error code from last command
