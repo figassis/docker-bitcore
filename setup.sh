@@ -20,6 +20,7 @@ case $1 in
     dashmainnet|dashtestnet)
         datadir=/root/.bitcore
         bitcore_conf=$datadir/bitcore-node-dash.json
+	bitcoin_conf=$datadir/data/dash.conf
         ;; 
     *)
         exit 1
